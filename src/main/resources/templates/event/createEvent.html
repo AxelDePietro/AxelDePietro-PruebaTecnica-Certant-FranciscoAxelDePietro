@@ -29,12 +29,12 @@
 
             <div class="mb-3">
                 <label class="form-label">Fecha y Hora</label>
-                <input type="datetime-local" name="dateTime" class="form-control">
+                <input type="datetime-local" name="dateTime" class="form-control" required>
             </div>
 
             <div class="mb-3">
                 <label class="form-label">Tipo de Evento</label>
-                <select id="eventType" name="eventType" class="form-control" onchange="renderSeats()">
+                <select id="eventType" name="eventType" class="form-control" onchange="renderSeats()" required>
                     <option value="">Seleccionar tipo</option>
                     <option value="THEATER">Obra</option>
                     <option value="CONCERT">Recital</option>

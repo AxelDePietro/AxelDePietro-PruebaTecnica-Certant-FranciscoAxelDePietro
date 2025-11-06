@@ -42,7 +42,7 @@ public class BookingController {
         
         mav.addObject("idEvent", idEvent);
         mav.addObject("event", event);
-        mav.addObject("capacidades", event.getSeatCapacity());
+        mav.addObject("capacidades", event.getAvailableCapacities());
 
         return mav;
     }

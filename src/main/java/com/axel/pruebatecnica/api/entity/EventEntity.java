@@ -21,52 +21,66 @@ import lombok.Data;
 @Entity
 @Data
 public class EventEntity {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id_event")
+	private int idEvent;
+
+	@Column(name = "event_name")
+	private String name;
+
+	@Column(name = "event_date_time")
+	private LocalDateTime dateTime;
+
+	// tipo de evento
+	@Column(name = "event_type")
+	@Enumerated(EnumType.STRING)
+	private EventTypeEnum eventTypeEnum;
+
+	// realaciones
+
+	@OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<SeatCapacityEntity> seatCapacity = new ArrayList<>();
+
+	@OneToMany(mappedBy = "event", cascade = { CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval = false)
+	private List<BookingEntity> bookings = new ArrayList<>();
+
 	
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_event")
-    private int idEvent;
 
-    @Column(name = "event_name")
-    private String name;
+	//
+	@Transient
+	public int getUsedSeats() {
+		return bookings.size();
+	}
 
-    @Column(name = "event_date_time")
-    private LocalDateTime dateTime;
+	@Transient
+	public int getRemainingSeats() {
+		return seatCapacity.stream()
+				.mapToInt(SeatCapacityEntity::getCapacity)
+				.sum();
+	}
 
-    
-    //tipo de evento
-    @Column(name = "event_type")
-    @Enumerated(EnumType.STRING)
-    private EventTypeEnum eventTypeEnum;
+	@Transient
+	public int getTotalCapacity() {
+		return getUsedSeats() + getRemainingSeats();
+	}
 
-    //realaciones
-    
-    @OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<SeatCapacityEntity> seatCapacity = new ArrayList<>();
+	@Transient
+	public int getAvailableSeats() {
+		return getRemainingSeats();
+	}
 
-    @OneToMany(mappedBy = "event", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = false)
-    private List<BookingEntity> bookings = new ArrayList<>();
+	@Transient
+	public int getSeatAvailable() {
+		return getAvailableSeats();
+	}
 
-    //todos estos se usan como valores en las vistas
-    //totalidad ed asientos
-    @Transient
-    public int getTotalCapacity() {
-        return seatCapacity.stream()
-        		//convierte cada capacidad de esta entidad a entero
-                .mapToInt(SeatCapacityEntity::getCapacity)
-                //los suma 
-                .sum();
-    }
+	@Transient
+	public List<SeatCapacityEntity> getAvailableCapacities() {
+		return seatCapacity.stream()
+				.filter(s -> s.getCapacity() > 0)
+				.toList();
+	}
 
-    //asientos usados, mide la lista de reservas
-    @Transient
-    public int getUsedSeats() {
-        return bookings.size();
-    }
-
-    //disponibilidad, resta al total el largo de la lista
-    @Transient
-    public int getAvailableSeats() {
-        return getTotalCapacity() - getUsedSeats();
-    }
 }

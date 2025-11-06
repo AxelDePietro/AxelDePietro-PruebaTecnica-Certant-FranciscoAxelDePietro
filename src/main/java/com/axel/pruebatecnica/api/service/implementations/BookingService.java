@@ -15,6 +15,7 @@ import com.axel.pruebatecnica.api.repository.IEventRepository;
 import com.axel.pruebatecnica.api.repository.IUserRepository;
 import com.axel.pruebatecnica.api.service.IBookingService;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -26,6 +27,7 @@ public class BookingService implements IBookingService {
 
     //crear reserva
     @Override
+    @Transactional
     public BookingEntity create(BookingEntity booking, int idEvent, int idClient, String seatTypeString) {
 
         EventEntity event = eventRepository.findById(idEvent)
@@ -34,6 +36,15 @@ public class BookingService implements IBookingService {
         UserEntity user = userRepository.findById(idClient)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado: " + idClient));
 
+        //setea freepass si 
+        boolean hasFreePass = (user.getBookings().size()+1)%5==0;
+        
+        if(hasFreePass) {
+        	user.setFreePass(true);
+        }else {
+        	user.setFreePass(false);
+        }
+        
         SeatTypeEnum seatType = parseSeatType(seatTypeString);
 
         SeatCapacityEntity seatCapacity = findSeatCapacity(event, seatType);
@@ -42,8 +53,16 @@ public class BookingService implements IBookingService {
 
         booking.setEvent(event);
         booking.setUser(user);
-        booking.setPrice(seatType.getValor());
-
+        
+        if(hasFreePass){
+        	booking.setPrice(0);
+        }else {
+        	booking.setPrice(seatType.getValor());
+        }
+        
+        //actualizar usuario por freepass
+        userRepository.save(user);
+        
         //actualiza el evento
         eventRepository.save(event);
         

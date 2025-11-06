@@ -2,10 +2,19 @@ package com.axel.pruebatecnica.api.entity;
 
 import com.axel.pruebatecnica.api.entity.enums.SeatTypeEnum;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 public class BookingEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

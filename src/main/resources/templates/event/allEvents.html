@@ -57,7 +57,7 @@
                     </p>
 
                     <p class="mb-3"><strong>Disponibles:</strong>
-                        <span th:text="${event.availableSeats}"></span>
+                        <span th:text="${event.seatAvailable}"></span>
                     </p>
 
                     <!-- Mostrar el detalle por tipo de asiento -->
@@ -73,8 +73,10 @@
 
                     <div class="mt-3 d-flex gap-2">
                         <a class="btn btn-sm btn-light" th:if="${event.availableSeats>0}" sec:authorize="hasRole('USER')"th:href="@{'/api/booking/createBooking/' + ${event.idEvent}}">Reservar</a>
-						<p th:if="${event.availableSeats<=0}" > Sin Asientos</p>
-                        <form sec:authorize="hasRole('ADMIN')" th:action="@{'/api/event/deleteEvent/' + ${event.idEvent}}" method="post">
+						
+						<p th:if="${event.availableSeats<=0}">Sin Asientos</p>
+                        
+						<form sec:authorize="hasRole('ADMIN')" th:action="@{'/api/event/deleteEvent/' + ${event.idEvent}}" method="post">
                             <button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
                         </form>
                     </div>
