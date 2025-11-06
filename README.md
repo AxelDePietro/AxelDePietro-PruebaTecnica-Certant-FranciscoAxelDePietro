@@ -13,6 +13,8 @@ Prueba Tecnica brindada por Certant.
 
 #### Informacion Previa a compilar la aplicacion
 
+la api no posee un front ya que fue diseñada con Thymeleaf, las vista viajan directo del backend al cliente.
+
 Se debe crear una base de datos local en MySQL la cual debe estar vacia, ademas de reemplzar la url, usuario y contraseña en el respectivo aplication.properties.
 
 Ejemplo de script sql:
