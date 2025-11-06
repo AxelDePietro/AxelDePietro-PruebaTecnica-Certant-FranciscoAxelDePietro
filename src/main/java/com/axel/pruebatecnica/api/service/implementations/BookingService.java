@@ -38,10 +38,6 @@ public class BookingService implements IBookingService {
 
         SeatCapacityEntity seatCapacity = findSeatCapacity(event, seatType);
 
-        if (seatCapacity.getCapacity() <= 0) {
-            throw new RuntimeException("No hay disponibilidad para " + seatType);
-        }
-
         seatCapacity.setCapacity(seatCapacity.getCapacity() - 1);
 
         booking.setEvent(event);

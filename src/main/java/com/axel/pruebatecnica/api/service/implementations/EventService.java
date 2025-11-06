@@ -1,8 +1,10 @@
 package com.axel.pruebatecnica.api.service.implementations;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
 import org.springframework.stereotype.Service;
 
 import com.axel.pruebatecnica.api.entity.EventEntity;
@@ -21,6 +23,10 @@ public class EventService implements IEventService {
     @Override
     public EventEntity create(EventEntity e) {
 
+    	if(e.getDateTime().isBefore(LocalDateTime.now())) {
+    		throw new RuntimeException("la fecha no puede ser menor a la de hoy");
+    	}
+    	
         Objects.requireNonNull(e, "error al crear evento");
 
         return eventRepository.save(e);
