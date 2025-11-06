@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Crear Evento</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"/>
+    <link th:href="@{/css/app.css}" rel="stylesheet"/>
+</head>
+
+<body>
+	
+<div th:replace="fragments/header :: navbar"></div>
+
+<main class="container mt-4">
+	
+    <div class="card p-4">
+		
+        <h1 class="page-title">Crear un nuevo evento</h1>
+
+        <form th:action="@{/api/event/createEvent}" method="post">
+
+            <div class="mb-3">
+                <label class="form-label">Nombre</label>
+                <input type="text" name="name" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Fecha y Hora</label>
+                <input type="datetime-local" name="dateTime" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Tipo de Evento</label>
+                <select id="eventType" name="eventType" class="form-control" onchange="renderSeats()">
+                    <option value="">Seleccionar tipo</option>
+                    <option value="THEATER">Obra</option>
+                    <option value="CONCERT">Recital</option>
+                    <option value="CONFERENCE">Conferencia</option>
+                </select>
+            </div>
+
+            <div id="theaterFields" class="seat-section">
+                <div class="mb-3">
+                    <label class="form-label">Asientos Generales</label>
+                    <input type="number" name="theaterGeneral" class="form-control" min="0">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Asientos VIP</label>
+                    <input type="number" name="theaterVip" class="form-control" min="0">
+                </div>
+            </div>
+
+            <div id="concertFields" class="seat-section">
+                <div class="mb-3">
+                    <label class="form-label">Platea</label>
+                    <input type="number" name="concertPlatea" class="form-control" min="0">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Campo</label>
+                    <input type="number" name="concertCampo" class="form-control" min="0">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Palco</label>
+                    <input type="number" name="concertPalco" class="form-control" min="0">
+                </div>
+            </div>
+
+            <div id="conferenceFields" class="seat-section">
+				
+                <div class="mb-3">
+                    <label class="form-label">Cantidad de Asientos meet & greet</label>
+                    <input type="number" name="conferenceSeatsMyG" class="form-control" min="0">
+				</div>
+				
+				<div class="mb-3">
+					<label class="form-label">Cantidad de Asientos sin meet & greet</label>
+					<input type="number" name="conferenceSeatsNoMyG" class="form-control" min="0">
+                </div>
+				
+            </div>
+
+            <button type="submit" class="btn btn-primary mt-3">Crear Evento</button>
+        </form>
+    </div>
+</main>
+
+<!--oculta los elementos dependiendo del tipo de evento-->
+<script>
+    function renderSeats() {
+        const type = document.getElementById('eventType').value;
+
+        document.getElementById('theaterFields').style.display = type === 'THEATER' ? 'block' : 'none';
+        document.getElementById('concertFields').style.display = type === 'CONCERT' ? 'block' : 'none';
+        document.getElementById('conferenceFields').style.display = type === 'CONFERENCE' ? 'block' : 'none';
+    }
+
+    renderSeats();
+</script>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

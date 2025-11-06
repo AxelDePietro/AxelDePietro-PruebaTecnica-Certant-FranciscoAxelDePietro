@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head></head>
+
+<body>
+<div th:fragment="navbar">
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid px-4">
+            <p class="nav-link">Sistema de gestión de reservas</p>
+            <div class="d-flex gap-3">
+                <a class="nav-link" th:href="@{/api/home}">Home</a>
+                <a class="nav-link" th:href="@{/api/event/allEvents}">Eventos</a>
+                <a class="nav-link" sec:authorize="!hasRole('ADMIN')" th:href="@{/api/user/misReservas}">Mis reservas</a>
+                <a class="nav-link" th:href="@{/api/booking/allBooking}" sec:authorize="hasRole('ADMIN')">Todas las reservas (admin)</a>
+                <a class="nav-link" th:href="@{/api/user/personalInfo}">Usuario</a>
+            </div>
+
+            <form th:action="@{/logout}" method="post"
+                  sec:authorize="isAuthenticated()" class="m-0">
+                <button type="submit" class="logout-btn">
+                    <i class="bi bi-box-arrow-right"></i>
+                </button>
+            </form>
+
+        </div>
+    </nav>
+</div>
+</body>
+</html>
