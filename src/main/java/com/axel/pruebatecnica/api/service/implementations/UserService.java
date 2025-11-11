@@ -12,7 +12,7 @@ import com.axel.pruebatecnica.api.entity.RoleEntity;
 import com.axel.pruebatecnica.api.entity.UserEntity;
 import com.axel.pruebatecnica.api.repository.IRoleRepository;
 import com.axel.pruebatecnica.api.repository.IUserRepository;
-import com.axel.pruebatecnica.api.service.IUserService;
+import com.axel.pruebatecnica.api.service.interfaces.IUserService;
 
 import lombok.RequiredArgsConstructor;
 

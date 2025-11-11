@@ -1,10 +1,16 @@
 package com.axel.pruebatecnica.api.entity;
 
+import java.awt.Event;
+
+import com.axel.pruebatecnica.api.entity.envents.EventEntity;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,4 +32,8 @@ public class BookingEntity {
     @Column(name = "booking_price")
 	private int price;
 
+    @ManyToOne
+    @JoinColumn(name = "idEvent")
+    private EventEntity  eventEntity;
+    
 }

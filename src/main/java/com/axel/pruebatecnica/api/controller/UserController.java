@@ -31,14 +31,14 @@ public class UserController {
 	}
 
 	//reservas delusuario activo
-	@GetMapping("/misReservas")
-	ModelAndView myBookings(@AuthenticationPrincipal User user) {
-
-		UserEntity userAux = userService.findByUsername(user.getUsername());
-
-		ModelAndView mav = new ModelAndView("user/misReservas");
-		mav.addObject("mybookings", bookingService.myBookings(userAux.getIdUser()));
-		return mav;
-	}
+//	@GetMapping("/misReservas")
+//	ModelAndView myBookings(@AuthenticationPrincipal User user) {
+//
+//		UserEntity userAux = userService.findByUsername(user.getUsername());
+//
+//		ModelAndView mav = new ModelAndView("user/misReservas");
+//		mav.addObject("mybookings", bookingService.myBookings(userAux.getIdUser()));
+//		return mav;
+//	}
 
 }

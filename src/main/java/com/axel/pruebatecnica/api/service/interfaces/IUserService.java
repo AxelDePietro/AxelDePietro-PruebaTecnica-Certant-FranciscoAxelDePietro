@@ -1,4 +1,4 @@
-package com.axel.pruebatecnica.api.service;
+package com.axel.pruebatecnica.api.service.interfaces;
 
 import java.util.List;
 

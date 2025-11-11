@@ -33,10 +33,8 @@ public abstract class EventEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int idEvento;
 	
-	private int nombre;
+	private int name;
 	
 	private LocalDateTime dateTime;
 	
-	@OneToMany(mappedBy = "event_entity", cascade = CascadeType.ALL)
-	private List<BookingEntity> bookings = new ArrayList<>();
 }

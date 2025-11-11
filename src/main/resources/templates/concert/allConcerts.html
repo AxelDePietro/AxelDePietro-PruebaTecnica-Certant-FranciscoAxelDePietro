@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Eventos</title>
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+	<link th:href="@{/css/app.css}" rel="stylesheet" />
+</head>
+
+<body>
+
+	<div th:replace="fragments/header :: navbar"></div>
+
+
+	<main class="container">
+
+		<div class="d-flex justify-content-between align-items-center mb-3">
+
+			<div class="section-description">
+				<h1 class="page-title">Conciertos disponibles</h1>
+				<p class="text-muted mb-4">
+					En esta sección verás los Conciertos disponibles.
+				</p>
+			</div>
+
+			<a sec:authorize="hasRole('ADMIN')" class="btn btn-primary" th:href="@{/api/event/createEvent}">
+				<i class="bi bi-plus-lg"></i>
+				Crear Concierto
+			</a>
+		</div>
+
+		<div th:if="${#lists.isEmpty(concerts)}" class="text-center">
+			<h4 class="mb-3">Aún no hay Conciertos</h4>
+		</div>
+
+		<div class="row row-cols-1 row-cols-md-3 g-4 mt-2">
+			<div class="col" th:each="concert : ${concerts}">
+				<div class="card shadow-sm h-100 p-3">
+
+					<div class="card-body">
+						
+						<h2 th:text="${concert.idConcert}"></h2>
+						<h5 class="card-title mb-2" th:text="${concert.name}">Nombre</h5>
+						
+						<p class="text-muted mb-2" th:text="${#temporals.format(concert.dateTime, 'dd/MM/yyyy HH:mm')}">
+						</p>
+
+						<p class="mb-1"><strong>Capacidad total:</strong>
+							<span th:text="${event.totalCapacity}"></span>
+						</p>
+
+						<p class="mb-1"><strong>Reservados:</strong>
+							<span th:text="${event.usedSeats}"></span>
+						</p>
+
+						<p class="mb-3"><strong>Disponibles:</strong>
+							<span th:text="${event.totalRermainigCapacity}"></span>
+						</p>
+
+						<!-- Mostrar el detalle por tipo de asiento -->
+<!--						<div>-->
+<!--							<strong>Detalle de Asientos:</strong>-->
+<!--							<ul class="mt-2">-->
+<!--								<li th:each="sc : ${event.seatCapacity}">-->
+<!--									<span th:text="${sc.seatType}"></span>:-->
+<!--									<span th:text="${sc.capacity}"></span>-->
+<!--								</li>-->
+<!--							</ul>-->
+<!--						</div>-->
+
+<!--						<div class="mt-3 d-flex gap-2">-->
+<!--							<a class="btn btn-sm btn-light" th:if="${event.availableSeats>0}"-->
+<!--								sec:authorize="hasRole('USER')"-->
+<!--								th:href="@{'/api/booking/createBooking/' + ${event.idEvent}}">Reservar</a>-->
+
+<!--							<p th:if="${event.availableSeats<=0}">Sin Asientos</p>-->
+
+<!--							<form sec:authorize="hasRole('ADMIN')"-->
+<!--								th:action="@{'/api/event/deleteEvent/' + ${event.idEvent}}" method="post">-->
+<!--								<button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>-->
+<!--							</form>-->
+<!--						</div>-->
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</main>
+
+
+	<div th:replace="fragments/footer :: footer"></div>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
