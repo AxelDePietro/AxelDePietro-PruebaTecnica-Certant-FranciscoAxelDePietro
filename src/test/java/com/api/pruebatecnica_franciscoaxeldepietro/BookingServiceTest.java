@@ -1,7 +1,9 @@
 package com.api.pruebatecnica_franciscoaxeldepietro;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +17,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.axel.pruebatecnica.api.entity.BookingEntity;
-import com.axel.pruebatecnica.api.entity.EventEntity;
 import com.axel.pruebatecnica.api.entity.SeatCapacityEntity;
 import com.axel.pruebatecnica.api.entity.UserEntity;
 import com.axel.pruebatecnica.api.entity.enums.SeatTypeEnum;
+import com.axel.pruebatecnica.api.entity.envents.EventEntity;
 import com.axel.pruebatecnica.api.repository.IBookingRepository;
 import com.axel.pruebatecnica.api.repository.IEventRepository;
 import com.axel.pruebatecnica.api.repository.IUserRepository;
