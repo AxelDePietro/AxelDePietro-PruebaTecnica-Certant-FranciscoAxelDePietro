@@ -1,7 +1,5 @@
 package com.axel.pruebatecnica.api.entity;
 
-import java.awt.Event;
-
 import com.axel.pruebatecnica.api.entity.envents.EventEntity;
 
 import jakarta.persistence.Column;
@@ -24,6 +22,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class BookingEntity {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_booking")
@@ -32,6 +31,10 @@ public class BookingEntity {
     @Column(name = "booking_price")
 	private int price;
 
+    @ManyToOne
+    @JoinColumn(name = "idUser")
+    private UserEntity user;
+    
     @ManyToOne
     @JoinColumn(name = "idEvent")
     private EventEntity  eventEntity;

@@ -21,17 +21,21 @@ public class EventConcertEntity extends EventEntity{
 	private int plateaCant;
 	
 	@Transient
-	private int usedSeats () {
-		return super.getBookings().size();
+	public int usedSeats () {
+		
+		if(!getBookings().isEmpty()) {
+			return getBookings().size();
+		}
+		return 0;
 	}
 	
 	@Transient
-	private int totalRermainigCapacity (){
+	public int totalRermainigCapacity (){
 		return campoCant + palcoCant + plateaCant;
 	}
 	
 	@Transient
-	private int totalCapacity () {
+	public int totalCapacity () {
 		return totalRermainigCapacity() + usedSeats();
 	}
 	

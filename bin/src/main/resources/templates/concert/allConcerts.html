@@ -27,7 +27,7 @@
 				</p>
 			</div>
 
-			<a sec:authorize="hasRole('ADMIN')" class="btn btn-primary" th:href="@{/api/concert/createConcertView}">
+			<a sec:authorize="hasRole('ADMIN')" class="btn btn-primary" th:href="@{/api/event/createEvent}">
 				<i class="bi bi-plus-lg"></i>
 				Crear Concierto
 			</a>
@@ -42,32 +42,49 @@
 				<div class="card shadow-sm h-100 p-3">
 
 					<div class="card-body">
-
-						<h2 th:text="${concert.idEvent}"></h2>
-
+						
+						<h2 th:text="${concert.idConcert}"></h2>
 						<h5 class="card-title mb-2" th:text="${concert.name}">Nombre</h5>
-
+						
 						<p class="text-muted mb-2" th:text="${#temporals.format(concert.dateTime, 'dd/MM/yyyy HH:mm')}">
 						</p>
 
 						<p class="mb-1"><strong>Capacidad total:</strong>
-							<span th:text="${concert.totalCapacity}"></span>
+							<span th:text="${event.totalCapacity}"></span>
 						</p>
 
 						<p class="mb-1"><strong>Reservados:</strong>
-							<span th:text="${concert.usedSeats}"></span>
+							<span th:text="${event.usedSeats}"></span>
 						</p>
 
 						<p class="mb-3"><strong>Disponibles:</strong>
-							<span th:text="${concert.totalRermainigCapacity}"></span>
+							<span th:text="${event.totalRermainigCapacity}"></span>
 						</p>
 
-<!--						sec:authorize="hasRole('ADMIN')"-->
-						<form
-							th:action="@{'/api/concert/deleteConcert/' + ${concert.idEvent}}" method="post">
-							<button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
-						</form>
-						
+						<!-- Mostrar el detalle por tipo de asiento -->
+<!--						<div>-->
+<!--							<strong>Detalle de Asientos:</strong>-->
+<!--							<ul class="mt-2">-->
+<!--								<li th:each="sc : ${event.seatCapacity}">-->
+<!--									<span th:text="${sc.seatType}"></span>:-->
+<!--									<span th:text="${sc.capacity}"></span>-->
+<!--								</li>-->
+<!--							</ul>-->
+<!--						</div>-->
+
+<!--						<div class="mt-3 d-flex gap-2">-->
+<!--							<a class="btn btn-sm btn-light" th:if="${event.availableSeats>0}"-->
+<!--								sec:authorize="hasRole('USER')"-->
+<!--								th:href="@{'/api/booking/createBooking/' + ${event.idEvent}}">Reservar</a>-->
+
+<!--							<p th:if="${event.availableSeats<=0}">Sin Asientos</p>-->
+
+<!--							<form sec:authorize="hasRole('ADMIN')"-->
+<!--								th:action="@{'/api/event/deleteEvent/' + ${event.idEvent}}" method="post">-->
+<!--								<button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>-->
+<!--							</form>-->
+<!--						</div>-->
+
 					</div>
 				</div>
 			</div>

@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.axel.pruebatecnica.api.entity.BookingEntity;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,10 +30,14 @@ public abstract class EventEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int idEvento;
+	private int idEvent;
 	
-	private int name;
+	private String name;
 	
 	private LocalDateTime dateTime;
+	
+	//relacion bidireccional requerida para evitar joins innecesarios
+	@OneToMany
+	private List<BookingEntity> bookings = new ArrayList<>();
 	
 }

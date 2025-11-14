@@ -12,30 +12,23 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class ConcertService implements IConcertService{
+public class ConcertService implements IConcertService {
 
 	private final IConcertRepository concertRepository;
-	
+
 	@Override
 	public EventConcertEntity createConcert(EventConcertEntity concertEntity) {
-		
 		return concertRepository.save(concertEntity);
-		
 	}
 
 	@Override
 	public List<EventConcertEntity> allConcerts() {
-		
 		return concertRepository.findAll();
 	}
 
 	@Override
 	public void delete(int idConcert) {
-		
 		concertRepository.deleteById(idConcert);
-		
 	}
 
-	
-	
 }

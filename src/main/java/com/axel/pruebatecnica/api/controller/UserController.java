@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.axel.pruebatecnica.api.entity.UserEntity;
 import com.axel.pruebatecnica.api.service.implementations.BookingService;
 import com.axel.pruebatecnica.api.service.implementations.UserService;
 
