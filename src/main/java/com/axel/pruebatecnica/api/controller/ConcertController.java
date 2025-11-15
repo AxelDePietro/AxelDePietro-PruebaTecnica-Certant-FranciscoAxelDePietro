@@ -1,4 +1,4 @@
-package com.axel.pruebatecnica.api.controller.newcontrollers;
+package com.axel.pruebatecnica.api.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

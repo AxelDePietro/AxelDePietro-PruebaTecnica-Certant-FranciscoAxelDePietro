@@ -1,4 +1,4 @@
-package com.axel.pruebatecnica.api.controller.newcontrollers;
+package com.axel.pruebatecnica.api.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,13 +22,13 @@ public class ConferenceController {
 	
 	@GetMapping("/createConferenceView")
 	public ModelAndView createConferenceView() {
-		return new ModelAndView("concert/createConference");
+		return new ModelAndView("conference/createConference");
 	}
 
 	@GetMapping("/allConferences")
 	public ModelAndView allConferences() {
-		ModelAndView mav = new ModelAndView("concert/allConferences");
-		mav.addObject("concerts", conferenceService.allConferences());
+		ModelAndView mav = new ModelAndView("conference/allConferences");
+		mav.addObject("conferences", conferenceService.allConferences());
 		return mav;
 
 	}

@@ -1,4 +1,4 @@
-package com.axel.pruebatecnica.api.controller.newcontrollers;
+package com.axel.pruebatecnica.api.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,13 +22,13 @@ public class TheaterController {
 
 	@GetMapping("/createTheaterView")
 	public ModelAndView createTheaterView() {
-		return new ModelAndView("concert/createTheater");
+		return new ModelAndView("theater/createTheater");
 	}
 
 	@GetMapping("/allTheaters")
 	public ModelAndView allTheaters() {
-		ModelAndView mav = new ModelAndView("concert/allTheater");
-		mav.addObject("concerts", theaterService.allTheaters());
+		ModelAndView mav = new ModelAndView("theater/allTheaters");
+		mav.addObject("theaters", theaterService.allTheaters());
 		return mav;
 
 	}
@@ -42,10 +42,10 @@ public class TheaterController {
 
 	}
 
-	@PostMapping("/deleteConcert/{idConcert}")
-	public ModelAndView deleteConcert(@PathVariable int idConcert) {
+	@PostMapping("/deleteTheater/{idTheater}")
+	public ModelAndView deleteTheater(@PathVariable int idTheater) {
 
-		theaterService.delete(idConcert);
+		theaterService.delete(idTheater);
 
 		return allTheaters();
 
