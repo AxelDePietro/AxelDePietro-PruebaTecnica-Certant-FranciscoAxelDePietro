@@ -107,6 +107,7 @@ public class BookingService implements IBookingService {
         }
     }
 
+//    filtra el arreglo con stream para encontrar la entidad con el tipo de asiento a comparar
     private SeatCapacityEntity findSeatCapacity(EventEntity event, SeatTypeEnum seatType) {
         return event.getSeatCapacity()
                 .stream()

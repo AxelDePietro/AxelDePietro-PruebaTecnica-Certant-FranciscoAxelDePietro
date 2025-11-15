@@ -40,9 +40,11 @@ public class EventEntity {
 
 	// realaciones
 
+	//lista de entidades tipo de asiento
 	@OneToMany(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<SeatCapacityEntity> seatCapacity = new ArrayList<>();
 
+	//lista de reservas
 	@OneToMany(mappedBy = "event", cascade = { CascadeType.PERSIST, CascadeType.MERGE }, orphanRemoval = false)
 	private List<BookingEntity> bookings = new ArrayList<>();
 

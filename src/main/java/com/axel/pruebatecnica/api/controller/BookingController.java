@@ -2,8 +2,8 @@ package com.axel.pruebatecnica.api.controller;
 
 import java.util.List;
 
-import com.axel.pruebatecnica.api.entity.EventEntity;
-import com.axel.pruebatecnica.api.service.implementations.EventService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 
 import com.axel.pruebatecnica.api.entity.BookingEntity;
-import com.axel.pruebatecnica.api.service.implementations.BookingService;
-import com.axel.pruebatecnica.api.service.implementations.UserService;
+import com.axel.pruebatecnica.api.entity.EventEntity;
 import com.axel.pruebatecnica.api.entity.UserEntity;
+import com.axel.pruebatecnica.api.service.implementations.BookingService;
+import com.axel.pruebatecnica.api.service.implementations.EventService;
+import com.axel.pruebatecnica.api.service.implementations.UserService;
 
 import lombok.RequiredArgsConstructor;
 
