@@ -62,13 +62,17 @@
 							<span th:text="${theater.totalRermainigCapacity}"></span>
 						</p>
 
-<!--						sec:authorize="hasRole('ADMIN')"-->
-						<form
-							sec:authorize="hasRole('ADMIN')"
+						<a class="btn btn-sm btn-light" th:if="${theater.totalRermainigCapacity>0}"
+							sec:authorize="hasRole('USER')"
+							th:href="@{'/api/booking/createBookingTheater/' + ${theater.idEvent}}">
+							Reservar
+						</a>
+
+						<form sec:authorize="hasRole('ADMIN')"
 							th:action="@{'/api/theater/deleteTheater/' + ${theater.idEvent}}" method="post">
 							<button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
 						</form>
-						
+
 					</div>
 				</div>
 			</div>

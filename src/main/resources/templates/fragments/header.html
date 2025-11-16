@@ -10,12 +10,13 @@
 				<a class="nav-link" th:href="@{/api/home}">Sistema de gestión de reservas (home)</a>
 				<div class="d-flex gap-3">
 
+					|
 					<!--users-->
 					<a class="nav-link" sec:authorize="!hasRole('ADMIN')" th:href="@{/api/user/misReservas}">Mis
 						reservas (user)</a>
 
 					<!--admin-->
-					<a class="nav-link" th:href="@{/api/booking/allBooking}" sec:authorize="hasRole('ADMIN')">Todas las
+					<a class="nav-link" sec:authorize="hasRole('ADMIN')" th:href="@{/api/booking/allBooking}">Todas las
 						reservas (admin)</a>
 
 					|

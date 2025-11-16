@@ -1,5 +1,6 @@
 package com.axel.pruebatecnica.api.entity;
 
+import com.axel.pruebatecnica.api.entity.enums.SeatTypeEnum;
 import com.axel.pruebatecnica.api.entity.envents.EventEntity;
 
 import jakarta.persistence.Column;
@@ -30,7 +31,10 @@ public class BookingEntity {
 
     @Column(name = "booking_price")
 	private int price;
-
+    
+    @Column(name = "seat_type")
+    private SeatTypeEnum seatType;
+    
     @ManyToOne
     @JoinColumn(name = "idUser")
     private UserEntity user;

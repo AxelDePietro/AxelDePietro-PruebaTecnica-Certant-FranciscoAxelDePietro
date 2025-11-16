@@ -62,7 +62,12 @@
 							<span th:text="${concert.totalRermainigCapacity}"></span>
 						</p>
 
-<!--						sec:authorize="hasRole('ADMIN')"-->
+						<a class="btn btn-sm btn-light" th:if="${concert.totalRermainigCapacity>0}" 
+							sec:authorize="hasRole('USER')"
+							th:href="@{'/api/booking/createBookingConcert/' + ${concert.idEvent}}">
+							Reservar
+						</a>
+
 						<form
 							sec:authorize="hasRole('ADMIN')"
 							th:action="@{'/api/concert/deleteConcert/' + ${concert.idEvent}}" method="post">

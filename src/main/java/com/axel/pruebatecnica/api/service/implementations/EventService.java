@@ -20,6 +20,11 @@ public class EventService implements IEventService{
 	public List<EventEntity> allEvents() {
 		return eventRepository.findAll();
 	}
+
+	@Override
+	public EventEntity findById(int idEvent) {
+		return eventRepository.findById(idEvent).orElseThrow(()-> new NullPointerException());
+	}
 	
 
 }

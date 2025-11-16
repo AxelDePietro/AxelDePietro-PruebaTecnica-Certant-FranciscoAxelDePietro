@@ -62,7 +62,12 @@
 							<span th:text="${conference.totalRermainigCapacity}"></span>
 						</p>
 
-<!--						sec:authorize="hasRole('ADMIN')"-->
+						<a class="btn btn-sm btn-light" th:if="${conference.totalRermainigCapacity>0}" 
+							sec:authorize="hasRole('USER')"
+							th:href="@{'/api/booking/createBookingConference/' + ${conference.idEvent}}">
+							Reservar
+						</a>
+						
 						<form
 							sec:authorize="hasRole('ADMIN')"
 							th:action="@{'/api/conference/deleteConference/' + ${conference.idEvent}}" method="post">
