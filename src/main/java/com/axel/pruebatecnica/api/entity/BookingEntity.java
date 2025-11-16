@@ -39,6 +39,7 @@ public class BookingEntity {
     @JoinColumn(name = "idUser")
     private UserEntity user;
     
+   
     @ManyToOne
     @JoinColumn(name = "idEvent")
     private EventEntity  eventEntity;
