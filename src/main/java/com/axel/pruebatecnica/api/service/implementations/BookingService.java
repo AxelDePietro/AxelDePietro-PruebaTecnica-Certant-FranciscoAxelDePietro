@@ -1,8 +1,7 @@
 package com.axel.pruebatecnica.api.service.implementations;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.stereotype.Service;
 
 import com.axel.pruebatecnica.api.entity.BookingEntity;
@@ -28,17 +27,18 @@ public class BookingService implements IBookingService {
 	private final IUserRepository userRepository;
 
 	@Override
-	public BookingEntity createBooking(BookingEntity booking, int idEvent, int idClient, String seatType)
+	public BookingEntity createBooking(BookingEntity booking, int idEvent, int idUser, String seatType)
 			throws Exception {
 
 		EventEntity event = eventRepository.findById(idEvent)
 				.orElseThrow(() -> new RuntimeException("el evento no se encontro"));
 
-		UserEntity user = userRepository.findById(idClient)
+		UserEntity user = userRepository.findById(idUser)
 				.orElseThrow(() -> new RuntimeException("el usuario no se encontro"));
 		;
 
-		// user atributes (entrada gratis)
+		/// user atributes (entrada gratis)
+		
 		boolean hasFreePass = (user.getBookings().size() + 1) % 5 == 0;
 
 		if (hasFreePass) {
@@ -47,7 +47,7 @@ public class BookingService implements IBookingService {
 			user.setFreePass(false);
 		}
 
-		// booking atributes
+		/// booking atributes
 
 		// set evento
 		try {
@@ -73,7 +73,8 @@ public class BookingService implements IBookingService {
 		// set enum tipo de asiento, metodo privado
 		booking.setSeatType(SeatTypeEnum.valueOf(seatType));
 
-		// event atributes
+		/// event atributes
+		
 		seatsCount(event, seatType);
 
 		// persistencia de datos
@@ -94,19 +95,19 @@ public class BookingService implements IBookingService {
 		bookingRepository.deleteById(idBooking);
 	}
 
-//    //reservas por usuario
-//    public List<BookingEntity> myBookings(int idUser) {
-//
-//        List<BookingEntity> bookings = new ArrayList<>();
-//
-//        for (BookingEntity b : bookingRepository.findAll()) {
-//            if (b.getUser().getIdUser() == idUser) {
-//                bookings.add(b);
-//            }
-//        }
-//
-//        return bookings;
-//    }
+    //reservas por usuario
+    public List<BookingEntity> myBookings(int idUser) {
+
+        List<BookingEntity> myBookings = new ArrayList<>();
+
+        for (BookingEntity b : bookingRepository.findAll()) {
+            if (b.getUser().getIdUser() == idUser) {
+            	myBookings.add(b);
+            }
+        }
+
+        return myBookings;
+    }
 
 //	metodos para uso local del crear
 
@@ -134,7 +135,7 @@ public class BookingService implements IBookingService {
 			case "RECITAL_PALCO":
 
 				aux = ((EventConcertEntity) event).getPalcoCant();
-				((EventConcertEntity) event).setPlateaCant(aux - 1);
+				((EventConcertEntity) event).setPalcoCant(aux - 1);
 
 				break;
 

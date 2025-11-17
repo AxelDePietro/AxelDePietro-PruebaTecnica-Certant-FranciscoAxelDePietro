@@ -22,10 +22,7 @@ public class EventConferenceEntity extends EventEntity{
 	@Transient
 	public int usedSeats () {
 		
-		if(!getBookings().isEmpty()) {
-			return getBookings().size();
-		}
-		return 0;
+		return getBookings().size();
 	}
 	
 	@Transient

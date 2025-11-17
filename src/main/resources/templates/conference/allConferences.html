@@ -27,7 +27,8 @@
 				</p>
 			</div>
 
-			<a sec:authorize="hasRole('ADMIN')" class="btn btn-primary" th:href="@{/api/conference/createConferenceView}">
+			<a sec:authorize="hasRole('ADMIN')" class="btn btn-primary"
+				th:href="@{/api/conference/createConferenceView}">
 				<i class="bi bi-plus-lg"></i>
 				Crear Conferencia
 			</a>
@@ -47,9 +48,20 @@
 
 						<h5 class="card-title mb-2" th:text="${conference.name}">Nombre</h5>
 
-						<p class="text-muted mb-2" th:text="${#temporals.format(conference.dateTime, 'dd/MM/yyyy HH:mm')}">
+						<p class="text-muted mb-2"
+							th:text="${#temporals.format(conference.dateTime, 'dd/MM/yyyy HH:mm')}">
 						</p>
-
+						-----------------
+						<div>
+							<!--asientos-->
+							<p class="mb-1"><strong>charlaConMeetCant:</strong>
+								<span th:text="${conference.charlaConMeetCant}"></span>
+							</p>
+							<p class="mb-1"><strong>charlaSinMeetCant:</strong>
+								<span th:text="${conference.charlaSinMeetCant}"></span>
+							</p>
+						</div>
+						-----------------
 						<p class="mb-1"><strong>Capacidad total:</strong>
 							<span th:text="${conference.totalCapacity}"></span>
 						</p>
@@ -62,18 +74,17 @@
 							<span th:text="${conference.totalRermainigCapacity}"></span>
 						</p>
 
-						<a class="btn btn-sm btn-light" th:if="${conference.totalRermainigCapacity>0}" 
+						<a class="btn btn-sm btn-light" th:if="${conference.totalRermainigCapacity>0}"
 							sec:authorize="hasRole('USER')"
 							th:href="@{'/api/booking/createBookingConference/' + ${conference.idEvent}}">
 							Reservar
 						</a>
-						
-						<form
-							sec:authorize="hasRole('ADMIN')"
+
+						<form sec:authorize="hasRole('ADMIN')"
 							th:action="@{'/api/conference/deleteConference/' + ${conference.idEvent}}" method="post">
 							<button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
 						</form>
-						
+
 					</div>
 				</div>
 			</div>

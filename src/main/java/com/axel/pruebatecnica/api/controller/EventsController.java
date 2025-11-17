@@ -7,7 +7,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.axel.pruebatecnica.api.service.implementations.ConcertService;
 import com.axel.pruebatecnica.api.service.implementations.ConferenceService;
-import com.axel.pruebatecnica.api.service.implementations.EventService;
 import com.axel.pruebatecnica.api.service.implementations.TheaterService;
 
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/event")
 public class EventsController {
 
-	private final EventService eventService;
+//	private final EventService eventService; util cuando mostraba todos los eventos sin separacion, una misma lista
 	
 	private final ConcertService concertService;
 	private final ConferenceService conferenceService;

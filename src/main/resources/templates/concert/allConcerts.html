@@ -49,7 +49,20 @@
 
 						<p class="text-muted mb-2" th:text="${#temporals.format(concert.dateTime, 'dd/MM/yyyy HH:mm')}">
 						</p>
-
+						-----------------
+						<div>
+							<!--asientos-->
+							<p class="mb-1"><strong>campoCant:</strong>
+								<span th:text="${concert.campoCant}"></span>
+							</p>
+							<p class="mb-1"><strong>palcoCant:</strong>
+								<span th:text="${concert.palcoCant}"></span>
+							</p>
+							<p class="mb-1"><strong>plateaCant:</strong>
+								<span th:text="${concert.plateaCant}"></span>
+							</p>
+						</div>
+						-----------------
 						<p class="mb-1"><strong>Capacidad total:</strong>
 							<span th:text="${concert.totalCapacity}"></span>
 						</p>
@@ -62,18 +75,17 @@
 							<span th:text="${concert.totalRermainigCapacity}"></span>
 						</p>
 
-						<a class="btn btn-sm btn-light" th:if="${concert.totalRermainigCapacity>0}" 
+						<a class="btn btn-sm btn-light" th:if="${concert.totalRermainigCapacity>0}"
 							sec:authorize="hasRole('USER')"
 							th:href="@{'/api/booking/createBookingConcert/' + ${concert.idEvent}}">
 							Reservar
 						</a>
 
-						<form
-							sec:authorize="hasRole('ADMIN')"
+						<form sec:authorize="hasRole('ADMIN')"
 							th:action="@{'/api/concert/deleteConcert/' + ${concert.idEvent}}" method="post">
 							<button type="submit" class="btn btn-sm btn-outline-danger">Eliminar</button>
 						</form>
-						
+
 					</div>
 				</div>
 			</div>

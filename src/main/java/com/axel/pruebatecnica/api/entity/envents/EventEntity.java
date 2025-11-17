@@ -37,7 +37,7 @@ public abstract class EventEntity {
 	private LocalDateTime dateTime;
 	
 	//relacion bidireccional requerida para evitar joins innecesarios
-	@OneToMany
+	@OneToMany(mappedBy = "event")
 	private List<BookingEntity> bookings = new ArrayList<>();
 	
 }
