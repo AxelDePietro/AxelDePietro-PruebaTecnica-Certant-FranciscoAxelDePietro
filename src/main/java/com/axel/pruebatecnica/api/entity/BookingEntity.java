@@ -42,6 +42,6 @@ public class BookingEntity {
    
     @ManyToOne
     @JoinColumn(name = "idEvent")
-    private EventEntity  eventEntity;
+    private EventEntity  event;
     
 }
