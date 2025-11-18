@@ -3,6 +3,7 @@ package com.axel.pruebatecnica.api.service.implementations;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.axel.pruebatecnica.api.entity.BookingEntity;
 import com.axel.pruebatecnica.api.entity.UserEntity;
@@ -27,6 +28,7 @@ public class BookingService implements IBookingService {
 	private final IUserRepository userRepository;
 
 	@Override
+	@Transactional
 	public BookingEntity createBooking(BookingEntity booking, int idEvent, int idUser, String seatType)
 			throws Exception {
 
@@ -86,16 +88,19 @@ public class BookingService implements IBookingService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<BookingEntity> allBookings() {
 		return bookingRepository.findAll();
 	}
 
 	@Override
+	@Transactional
 	public void delete(int idBooking) {
 		bookingRepository.deleteById(idBooking);
 	}
 
     //reservas por usuario
+	@Transactional(readOnly = true)
     public List<BookingEntity> myBookings(int idUser) {
 
         List<BookingEntity> myBookings = new ArrayList<>();
@@ -110,7 +115,7 @@ public class BookingService implements IBookingService {
     }
 
 //	metodos para uso local del crear
-
+	//resta asientos a la entidad evento que este ligada a la reserva
 	private void seatsCount(EventEntity event, String seatType) {
 
 		int aux = 0;
