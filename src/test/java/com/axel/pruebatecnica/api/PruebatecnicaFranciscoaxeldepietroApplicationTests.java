@@ -1,4 +1,4 @@
-package com.api.pruebatecnica_franciscoaxeldepietro;
+package com.axel.pruebatecnica.api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
