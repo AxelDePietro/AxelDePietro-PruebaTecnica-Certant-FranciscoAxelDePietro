@@ -12,6 +12,7 @@ import com.axel.pruebatecnica.api.entity.envents.EventConcertEntity;
 import com.axel.pruebatecnica.api.entity.envents.EventConferenceEntity;
 import com.axel.pruebatecnica.api.entity.envents.EventEntity;
 import com.axel.pruebatecnica.api.entity.envents.EventTheaterEntity;
+import com.axel.pruebatecnica.api.exceptions.ListaVacia;
 import com.axel.pruebatecnica.api.repository.IBookingRepository;
 import com.axel.pruebatecnica.api.repository.IEventRepository;
 import com.axel.pruebatecnica.api.repository.IUserRepository;
@@ -45,25 +46,15 @@ public class BookingService implements IBookingService {
 
 		if (hasFreePass) {
 			user.setFreePass(true);
-		} else {
-			user.setFreePass(false);
-		}
+		} 
 
 		/// booking atributes
 
 		// set evento
-		try {
-			booking.setEvent(event);
-		} catch (Exception e) {
-			e.getMessage();
-		}
+		booking.setEvent(event);
 
 		// set usuario
-		try {
-			booking.setUser(user);
-		} catch (Exception e) {
-			e.getMessage();
-		}
+		booking.setUser(user);
 
 		// precio si usuario tiene entrada gratis o no (precio normal)
 		if (hasFreePass) {
@@ -90,7 +81,15 @@ public class BookingService implements IBookingService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<BookingEntity> allBookings() {
-		return bookingRepository.findAll();
+		
+		List<BookingEntity> bookings = bookingRepository.findAll();
+		
+		if(bookings.isEmpty()) {
+			throw new ListaVacia();
+		}
+		
+		return bookings;
+		
 	}
 
 	@Override
@@ -110,6 +109,10 @@ public class BookingService implements IBookingService {
             	myBookings.add(b);
             }
         }
+        
+        if(myBookings.isEmpty()) {
+			throw new ListaVacia();
+		}
 
         return myBookings;
     }

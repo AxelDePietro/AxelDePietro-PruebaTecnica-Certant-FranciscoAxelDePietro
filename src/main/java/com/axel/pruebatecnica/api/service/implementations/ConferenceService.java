@@ -26,7 +26,11 @@ public class ConferenceService implements IConferenceService{
 	@Override
 	@Transactional(readOnly = true)
 	public List<EventConferenceEntity> allConferences() {
-		return conferenceRepository.findAll();
+	
+		List<EventConferenceEntity> conferences = conferenceRepository.findAll(); 
+		
+		return conferences;
+		
 	}
 
 	@Override

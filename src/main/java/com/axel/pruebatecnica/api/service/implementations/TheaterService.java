@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.axel.pruebatecnica.api.entity.envents.EventTheaterEntity;
+import com.axel.pruebatecnica.api.exceptions.ListaVacia;
 import com.axel.pruebatecnica.api.repository.ITheaterRepository;
 import com.axel.pruebatecnica.api.service.interfaces.ITheaterService;
 
@@ -26,7 +27,14 @@ public class TheaterService implements ITheaterService{
 	@Override
 	@Transactional(readOnly = true)
 	public List<EventTheaterEntity> allTheaters() {
-		return theaterRepository.findAll();
+		 
+		List<EventTheaterEntity> theaters = theaterRepository.findAll();
+		
+		if(theaters.isEmpty()) {
+			throw new ListaVacia();
+		}
+		
+		return theaters;
 	}
 
 	@Override

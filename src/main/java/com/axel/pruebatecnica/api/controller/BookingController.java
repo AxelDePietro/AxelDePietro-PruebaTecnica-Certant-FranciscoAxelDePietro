@@ -33,7 +33,7 @@ public class BookingController {
 
     //vista de reservas
     @GetMapping("/createBookingConcert/{idEvent}")
-    ModelAndView createViewConcert(@PathVariable int idEvent) {
+    ModelAndView createViewConcert(@PathVariable int idEvent) throws Exception {
     	
     	EventEntity event = eventService.findById(idEvent);
         
@@ -45,7 +45,7 @@ public class BookingController {
     }
     
     @GetMapping("/createBookingTheater/{idEvent}")
-    ModelAndView createViewTheater(@PathVariable int idEvent) {
+    ModelAndView createViewTheater(@PathVariable int idEvent) throws Exception {
     	
     	EventEntity event = eventService.findById(idEvent);
         
@@ -57,7 +57,7 @@ public class BookingController {
     }
     
     @GetMapping("/createBookingConference/{idEvent}")
-    ModelAndView createViewConference(@PathVariable int idEvent) {
+    ModelAndView createViewConference(@PathVariable int idEvent) throws Exception {
     	
         EventEntity event = eventService.findById(idEvent);
         
