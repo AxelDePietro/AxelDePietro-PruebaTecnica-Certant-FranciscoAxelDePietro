@@ -91,7 +91,7 @@ public class ConcertServiceTest {
 	
 	@Test
 	@DisplayName("eliminar concierto correctamente")
-	void deleteConcert(){
+	void delete(){
 		
 		//enmende croto a optional
 		Optional<EventConcertEntity> optional = Optional.of(eventConcertEntity);
@@ -146,7 +146,7 @@ public class ConcertServiceTest {
 	
 	@Test
 	@DisplayName("delete Falla por Id invalido")
-	void deleteConcertFailure() {
+	void deleteFailure() {
 		
 		when(concertRepository.findById(anyInt())).thenReturn(Optional.empty());
 		

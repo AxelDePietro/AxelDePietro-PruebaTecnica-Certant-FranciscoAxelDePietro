@@ -53,7 +53,7 @@ public class TheaterService implements ITheaterService {
 		Optional<EventTheaterEntity> optional = theaterRepository.findById(idTheater);
 
 		if (optional.isEmpty()) {
-			throw new RuntimeException("la obra de teateo que desea eliminar no se encontro");
+			throw new RuntimeException("la obra de teatro que desea eliminar no se encontro");
 		}
 
 		theaterRepository.deleteById(idTheater);
