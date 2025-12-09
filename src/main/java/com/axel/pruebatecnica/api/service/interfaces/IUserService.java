@@ -9,7 +9,7 @@ import com.axel.pruebatecnica.api.entity.UserEntity;
 @Service
 public interface IUserService {
 
-    List<UserEntity> findAll();
+	List<UserEntity> findAll();
 
-    UserEntity save(UserEntity user);
+	UserEntity save(UserEntity user);
 }

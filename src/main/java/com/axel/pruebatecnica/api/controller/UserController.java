@@ -17,10 +17,11 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
 	private final UserService userService;
-	
-	// user de spring para tomar la sesion actual del contexto de la aplicacion, asi como le @AuthnticationPrincipal
+
+	// user de spring para tomar la sesion actual del contexto de la aplicacion, asi
+	// como le @AuthnticationPrincipal
 	@GetMapping("/personalInfo")
-	ModelAndView personalInfo(@AuthenticationPrincipal User user) {
+	ModelAndView personalInfo(@AuthenticationPrincipal User user) throws Exception {
 
 		ModelAndView mav = new ModelAndView("user/personalInformation");
 		mav.addObject("user", userService.findByUsername(user.getUsername()));

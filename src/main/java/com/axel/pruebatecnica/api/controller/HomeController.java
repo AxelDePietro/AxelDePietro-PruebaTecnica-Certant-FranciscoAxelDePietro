@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/api/home")
 public class HomeController {
 
-	//ruta a home o html principal
+	// ruta a home o html principal
 	@GetMapping
 	public ModelAndView homeView(@AuthenticationPrincipal User user) {
 		ModelAndView mav = new ModelAndView("home/home");

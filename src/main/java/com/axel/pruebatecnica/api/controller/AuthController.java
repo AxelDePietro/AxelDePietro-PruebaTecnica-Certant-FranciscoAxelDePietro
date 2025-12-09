@@ -19,7 +19,7 @@ public class AuthController {
 
 	private final UserService userService;
 
-	//vista de registro
+	// vista de registro
 	@GetMapping("/register")
 	ModelAndView registerView() {
 
@@ -27,7 +27,7 @@ public class AuthController {
 		return mav;
 	}
 
-	//registro, creacion de usuario
+	// registro, creacion de usuario
 	@PostMapping("/register")
 	ModelAndView register(@ModelAttribute UserEntity user) {
 
@@ -36,10 +36,10 @@ public class AuthController {
 		return mav;
 	}
 
-	//pagin de login
+	// pagin de login
 	@GetMapping("/login")
 	ModelAndView loginView() {
-		
+
 		ModelAndView mav = new ModelAndView("register/login");
 		return mav;
 	}

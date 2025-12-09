@@ -2,6 +2,7 @@ package com.axel.pruebatecnica.api.service.implementations;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,20 +42,24 @@ public class BookingService implements IBookingService {
 		;
 
 		/// user atributes (entrada gratis)
-		
+
 		boolean hasFreePass = (user.getBookings().size() + 1) % 5 == 0;
 
 		if (hasFreePass) {
 			user.setFreePass(true);
-		} 
+		}
 
 		/// booking atributes
+
+		// si alguna de esta no se encuentra falla antes{
 
 		// set evento
 		booking.setEvent(event);
 
 		// set usuario
 		booking.setUser(user);
+
+		// }
 
 		// precio si usuario tiene entrada gratis o no (precio normal)
 		if (hasFreePass) {
@@ -67,7 +72,7 @@ public class BookingService implements IBookingService {
 		booking.setSeatType(SeatTypeEnum.valueOf(seatType));
 
 		/// event atributes
-		
+
 		seatsCount(event, seatType);
 
 		// persistencia de datos
@@ -81,15 +86,15 @@ public class BookingService implements IBookingService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<BookingEntity> allBookings() {
-		
+
 		List<BookingEntity> bookings = bookingRepository.findAll();
-		
-		if(bookings.isEmpty()) {
+
+		if (bookings.isEmpty()) {
 			throw new ListaVacia();
 		}
-		
+
 		return bookings;
-		
+
 	}
 
 	@Override
@@ -98,27 +103,27 @@ public class BookingService implements IBookingService {
 		bookingRepository.deleteById(idBooking);
 	}
 
-    //reservas por usuario
+	// reservas por usuario
 	@Transactional(readOnly = true)
-    public List<BookingEntity> myBookings(int idUser) {
+	public List<BookingEntity> myBookings(int idUser) {
 
-        List<BookingEntity> myBookings = new ArrayList<>();
+		List<BookingEntity> myBookings = new ArrayList<>();
 
-        for (BookingEntity b : bookingRepository.findAll()) {
-            if (b.getUser().getIdUser() == idUser) {
-            	myBookings.add(b);
-            }
-        }
-        
-        if(myBookings.isEmpty()) {
+		for (BookingEntity b : bookingRepository.findAll()) {
+			if (b.getUser().getIdUser() == idUser) {
+				myBookings.add(b);
+			}
+		}
+
+		if (myBookings.isEmpty() || myBookings == null) {
 			throw new ListaVacia();
 		}
 
-        return myBookings;
-    }
+		return myBookings;
+	}
 
 //	metodos para uso local del crear
-	//resta asientos a la entidad evento que este ligada a la reserva
+	// resta asientos a la entidad evento que este ligada a la reserva
 	private void seatsCount(EventEntity event, String seatType) {
 
 		int aux = 0;

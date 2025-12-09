@@ -17,13 +17,13 @@ import lombok.RequiredArgsConstructor;
 public class EventsController {
 
 //	private final EventService eventService; util cuando mostraba todos los eventos sin separacion, una misma lista
-	
+
 	private final ConcertService concertService;
 	private final ConferenceService conferenceService;
 	private final TheaterService theaterService;
 
-    //mostrar
-    @GetMapping("/allEvents")
+	// mostrar
+	@GetMapping("/allEvents")
 	ModelAndView allEvents() {
 		ModelAndView mav = new ModelAndView("event/allEvents");
 		mav.addObject("concerts", concertService.allConcerts());
@@ -31,5 +31,5 @@ public class EventsController {
 		mav.addObject("theaters", theaterService.allTheaters());
 		return mav;
 	}
-    
+
 }

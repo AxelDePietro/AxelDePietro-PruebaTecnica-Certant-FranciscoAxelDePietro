@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.axel.pruebatecnica.api.entity.envents.EventConferenceEntity;
 
-public interface IConferenceRepository extends JpaRepository<EventConferenceEntity , Integer>{
+public interface IConferenceRepository extends JpaRepository<EventConferenceEntity, Integer> {
 
 }

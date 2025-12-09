@@ -7,9 +7,9 @@ import com.axel.pruebatecnica.api.entity.envents.EventTheaterEntity;
 public interface ITheaterService {
 
 	public EventTheaterEntity createTheater(EventTheaterEntity theaterEntity);
-	
-	public List<EventTheaterEntity> allTheaters ();
-	
-	public void delete (int idTheater);
-	
+
+	public List<EventTheaterEntity> allTheaters();
+
+	public void delete(int idTheater);
+
 }

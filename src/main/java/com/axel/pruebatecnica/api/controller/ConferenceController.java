@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 public class ConferenceController {
 
 	private final ConferenceService conferenceService;
-	
+
 	@GetMapping("/createConferenceView")
 	public ModelAndView createConferenceView() {
 		return new ModelAndView("conference/createConference");
@@ -34,9 +34,9 @@ public class ConferenceController {
 	}
 
 	@PostMapping("/createConference")
-	public ModelAndView createConference(@ModelAttribute EventConferenceEntity conferenceEntity ) {
+	public ModelAndView createConference(@ModelAttribute EventConferenceEntity conferenceEntity) {
 
-		conferenceService.createConference( conferenceEntity);
+		conferenceService.createConference(conferenceEntity);
 
 		return allConferences();
 
@@ -50,5 +50,5 @@ public class ConferenceController {
 		return allConferences();
 
 	}
-	
+
 }

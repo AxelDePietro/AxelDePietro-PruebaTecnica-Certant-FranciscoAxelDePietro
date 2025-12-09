@@ -27,14 +27,8 @@ public class SecurityConfig {
 	SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		// permite solo las rutas especificadas, lo demas requiere autenticacion
 		return http.authorizeHttpRequests((authorize) -> authorize
-								.requestMatchers("/", 
-										"/login", 
-										"/api/login", 
-										"/api/register",
-                                        "/css/**", 
-                                        "/js/**", 
-                                        "/images/**")
-								.permitAll().anyRequest().authenticated())
+				.requestMatchers("/", "/login", "/api/login", "/api/register", "/css/**", "/js/**", "/images/**")
+				.permitAll().anyRequest().authenticated())
 				// login
 				.formLogin(form -> form.loginPage("/api/login")// pagina personalizada login
 						.defaultSuccessUrl("/api/home", true) // tras iniciar sesion
@@ -45,9 +39,9 @@ public class SecurityConfig {
 						.permitAll())
 				// csrf deshabilitado para evitar vulnerabildades
 				.csrf(csrf -> csrf.disable())
-				//maenjo se sesiones, mantiene la sesion activa aunque cerremos el cliente (always), inicio de sesion cada vz que se cierra el cliente (if_required)
-				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
-				.build();
+				// maenjo se sesiones, mantiene la sesion activa aunque cerremos el cliente
+				// (always), inicio de sesion cada vz que se cierra el cliente (if_required)
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)).build();
 
 	}
 }

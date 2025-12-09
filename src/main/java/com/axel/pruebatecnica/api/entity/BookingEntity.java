@@ -23,25 +23,24 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 public class BookingEntity {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_booking")
+	@Column(name = "id_booking")
 	private int idBooking;
 
-    @Column(name = "booking_price")
+	@Column(name = "booking_price")
 	private int price;
-    
-    @Column(name = "seat_type")
-    private SeatTypeEnum seatType;
-    
-    @ManyToOne
-    @JoinColumn(name = "idUser")
-    private UserEntity user;
-    
-   
-    @ManyToOne
-    @JoinColumn(name = "idEvent")
-    private EventEntity  event;
-    
+
+	@Column(name = "seat_type")
+	private SeatTypeEnum seatType;
+
+	@ManyToOne
+	@JoinColumn(name = "idUser")
+	private UserEntity user;
+
+	@ManyToOne
+	@JoinColumn(name = "idEvent")
+	private EventEntity event;
+
 }

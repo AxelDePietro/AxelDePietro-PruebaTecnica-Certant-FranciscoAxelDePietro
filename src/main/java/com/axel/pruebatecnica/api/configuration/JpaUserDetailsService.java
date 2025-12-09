@@ -35,7 +35,8 @@ public class JpaUserDetailsService implements UserDetailsService {
 
 		UserEntity user = userOptional.orElseThrow();
 
-		//convierte a SimpleGrantedAuthority los roles del usuario antes rtomado y los inserta en los parametros del usuario UserDetails que retorna el metdo
+		// convierte a SimpleGrantedAuthority los roles del usuario antes rtomado y los
+		// inserta en los parametros del usuario UserDetails que retorna el metdo
 		List<GrantedAuthority> authorities = user.getRoles().stream()
 				.map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
 
@@ -43,9 +44,9 @@ public class JpaUserDetailsService implements UserDetailsService {
 	}
 
 	/*
-	 *  udemy:
-		esta clase es tomada por sSecurity en el login para autenticar los usuarios
-		si son encontrados los authentica, si no lanza la exception que especifique
-	
-	*/
+	 * udemy: esta clase es tomada por sSecurity en el login para autenticar los
+	 * usuarios si son encontrados los authentica, si no lanza la exception que
+	 * especifique
+	 * 
+	 */
 }

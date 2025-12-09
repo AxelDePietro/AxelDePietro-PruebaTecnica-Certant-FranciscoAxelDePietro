@@ -6,32 +6,36 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Entity
-public class EventTheaterEntity extends EventEntity{
+public class EventTheaterEntity extends EventEntity {
 
 	private int generalCant;
 	private int vipCant;
-	
+
 	@Transient
-	public int usedSeats () {
-		
+	public int usedSeats() {
+
 		return getBookings().size();
 	}
-	
+
 	@Transient
-	public int totalRermainigCapacity (){
+	public int totalRermainigCapacity() {
 		return generalCant + vipCant;
 	}
-	
+
 	@Transient
-	public int totalCapacity () {
+	public int totalCapacity() {
 		return totalRermainigCapacity() + usedSeats();
+	}
+	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return super.toString() + "( general = " + getGeneralCant() + ", vip = " + getVipCant() + " ) asientos ( usados = " +  usedSeats() + ", total = " + totalCapacity() + ", restantes = " + totalRermainigCapacity() + " )";
 	}
 }

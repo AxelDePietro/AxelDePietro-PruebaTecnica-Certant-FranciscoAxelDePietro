@@ -6,10 +6,10 @@ import com.axel.pruebatecnica.api.entity.envents.EventConcertEntity;
 
 public interface IConcertService {
 
-	public EventConcertEntity createConcert (EventConcertEntity concertEntity);
-	
-	public List<EventConcertEntity> allConcerts ();
-	
-	public void delete (int idConcert);
-	
+	public EventConcertEntity createConcert(EventConcertEntity concertEntity);
+
+	public List<EventConcertEntity> allConcerts();
+
+	public void delete(int idConcert);
+
 }
