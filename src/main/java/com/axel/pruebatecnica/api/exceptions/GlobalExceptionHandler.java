@@ -13,5 +13,12 @@ public class GlobalExceptionHandler {
 		mav.addObject("mensaje", ex.getMessage());
 		return mav;
 	}
+	
+	@ExceptionHandler(SinReservas.class)
+	public ModelAndView manejearSinReservas(SinReservas ex) {
+		ModelAndView mav = new ModelAndView("error/sinReservas");
+		mav.addObject("mensaje", ex.getMessage());
+		return mav;
+	}
 
 }

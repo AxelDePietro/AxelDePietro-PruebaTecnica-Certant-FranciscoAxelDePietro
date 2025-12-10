@@ -14,6 +14,7 @@ import com.axel.pruebatecnica.api.entity.envents.EventConferenceEntity;
 import com.axel.pruebatecnica.api.entity.envents.EventEntity;
 import com.axel.pruebatecnica.api.entity.envents.EventTheaterEntity;
 import com.axel.pruebatecnica.api.exceptions.ListaVacia;
+import com.axel.pruebatecnica.api.exceptions.SinReservas;
 import com.axel.pruebatecnica.api.repository.IBookingRepository;
 import com.axel.pruebatecnica.api.repository.IEventRepository;
 import com.axel.pruebatecnica.api.repository.IUserRepository;
@@ -31,7 +32,7 @@ public class BookingService implements IBookingService {
 
 	@Override
 	@Transactional
-	public BookingEntity createBooking(BookingEntity booking, int idEvent, int idUser, String seatType)
+	public BookingEntity createBooking(BookingEntity booking, int idEvent, int idUser)
 			throws Exception {
 
 		EventEntity event = eventRepository.findById(idEvent)
@@ -40,9 +41,11 @@ public class BookingService implements IBookingService {
 		UserEntity user = userRepository.findById(idUser)
 				.orElseThrow(() -> new RuntimeException("el usuario no se encontro"));
 		;
+		
+		String seatType = booking.getSeatType().name();
 
+		
 		/// user atributes (entrada gratis)
-
 		boolean hasFreePass = (user.getBookings().size() + 1) % 5 == 0;
 
 		if (hasFreePass) {
@@ -50,16 +53,13 @@ public class BookingService implements IBookingService {
 		}
 
 		/// booking atributes
-
-		// si alguna de esta no se encuentra falla antes{
-
+		/// si alguna de esta no se encuentra falla antes{
 		// set evento
 		booking.setEvent(event);
 
 		// set usuario
 		booking.setUser(user);
-
-		// }
+		/// }
 
 		// precio si usuario tiene entrada gratis o no (precio normal)
 		if (hasFreePass) {
@@ -90,7 +90,7 @@ public class BookingService implements IBookingService {
 		List<BookingEntity> bookings = bookingRepository.findAll();
 
 		if (bookings.isEmpty()) {
-			throw new ListaVacia();
+			throw new SinReservas();
 		}
 
 		return bookings;
@@ -116,7 +116,7 @@ public class BookingService implements IBookingService {
 		}
 
 		if (myBookings.isEmpty() || myBookings == null) {
-			throw new ListaVacia();
+			throw new SinReservas();
 		}
 
 		return myBookings;

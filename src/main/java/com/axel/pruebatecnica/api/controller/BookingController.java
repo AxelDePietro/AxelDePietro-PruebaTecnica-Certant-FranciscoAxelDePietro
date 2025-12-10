@@ -93,12 +93,12 @@ public class BookingController {
 	// crear reserva
 	@PostMapping("/createBooking")
 	ModelAndView createBooking(@AuthenticationPrincipal User user, @ModelAttribute BookingEntity booking,
-			@RequestParam int idEvent, @RequestParam String seatType) throws Exception {
+			@RequestParam int idEvent) throws Exception {
 
 		// usuario con la sesion activa
 		UserEntity userAux = userService.findByUsername(user.getUsername());
 
-		bookingService.createBooking(booking, idEvent, userAux.getIdUser(), seatType);
+		bookingService.createBooking(booking, idEvent, userAux.getIdUser());
 
 		return myBookings(user);
 	}

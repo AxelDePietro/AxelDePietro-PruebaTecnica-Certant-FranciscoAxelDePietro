@@ -18,14 +18,10 @@
 					<!--admin-->
 					<a class="nav-link" sec:authorize="hasRole('ADMIN')" th:href="@{/api/booking/allBooking}">Todas las
 						reservas (admin)</a>
-
 					|
-					<a class="nav-link" th:href="@{/api/event/allEvents}">allEventos</a>
-					
-					|
-					<a class="nav-link" th:href="@{/api/concert/allConcerts}">AllConcerts</a>
-
 					<a class="nav-link" th:href="@{/api/theater/allTheaters}">AllTheaters</a>
+					
+					<a class="nav-link" th:href="@{/api/concert/allConcerts}">AllConcerts</a>
 
 					<a class="nav-link" th:href="@{/api/conference/allConferences}">AllConferences</a>
 					|
@@ -33,8 +29,7 @@
 				</div>
 
 				<div class="d-flex gap-3">
-
-					<a class="nav-link" th:href="@{/api/user/personalInfo}">Usuario</a>
+					<a class="bi bi-person-circle fs-4" th:href="@{/api/user/personalInfo}"></a>
 					
 					<form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()" class="m-0">
 						<button type="submit" class="logout-btn">

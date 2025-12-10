@@ -6,7 +6,7 @@ import com.axel.pruebatecnica.api.entity.BookingEntity;
 
 public interface IBookingService {
 
-	public BookingEntity createBooking(BookingEntity booking, int idEvent, int idClient, String seatType)
+	public BookingEntity createBooking(BookingEntity booking, int idEvent, int idClient)
 			throws Exception;
 
 	public List<BookingEntity> allBookings();
