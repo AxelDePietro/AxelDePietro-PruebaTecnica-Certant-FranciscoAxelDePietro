@@ -3,6 +3,8 @@ package com.axel.pruebatecnica.api.service.implementations;
 import java.util.List;
 import java.util.Optional;
 
+import com.axel.pruebatecnica.api.dto.event.conference.ConferenceCreateDTO;
+import com.axel.pruebatecnica.api.mapper.ConferenceMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,18 +20,13 @@ import lombok.RequiredArgsConstructor;
 public class ConferenceService implements IConferenceService {
 
 	private final IConferenceRepository conferenceRepository;
+    private final ConferenceMapper conferenceMapper;
 
 	@Override
 	@Transactional
-	public EventConferenceEntity createConference(EventConferenceEntity conferenceEntity) {
+	public EventConferenceEntity createConference(ConferenceCreateDTO conferenceDTO) {
 
-		if (conferenceEntity.getName().isEmpty()) {
-			throw new RuntimeException("el evento no puede tener en nombre vacio");
-		}
-
-		if (conferenceEntity.getDateTime() == null) {
-			throw new RuntimeException("el evento no puede tener la fecha vacia");
-		}
+        EventConferenceEntity conferenceEntity = conferenceMapper.toEntity(conferenceDTO);
 
 		return conferenceRepository.save(conferenceEntity);
 	}

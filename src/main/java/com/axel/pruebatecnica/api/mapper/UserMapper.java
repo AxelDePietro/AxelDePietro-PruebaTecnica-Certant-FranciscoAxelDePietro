@@ -1,6 +1,7 @@
 package com.axel.pruebatecnica.api.mapper;
 
 import com.axel.pruebatecnica.api.dto.user.UserCreateDTO;
+import com.axel.pruebatecnica.api.dto.user.UserResponseDTO;
 import com.axel.pruebatecnica.api.entity.UserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
@@ -10,6 +11,6 @@ public interface UserMapper {
 
     UserEntity toEntity (UserCreateDTO dto);
 
-    UserCreateDTO toDTO (UserEntity entity);
+    UserResponseDTO toDTO (UserEntity entity);
 
 }

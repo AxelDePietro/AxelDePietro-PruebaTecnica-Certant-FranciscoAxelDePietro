@@ -16,6 +16,7 @@ public class EventService implements IEventService {
 
 	private final IEventRepository eventRepository;
 
+    //en desuso por cambios de vistas
 	@Override
 	@Transactional(readOnly = true)
 	public EventEntity findById(int idEvent) throws Exception {

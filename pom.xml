@@ -81,7 +81,13 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- mapstruct dependency -->
+        <!--validator de spring-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!-- mapstruct dependency -->
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>

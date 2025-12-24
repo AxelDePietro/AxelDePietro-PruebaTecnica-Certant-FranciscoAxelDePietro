@@ -3,6 +3,8 @@ package com.axel.pruebatecnica.api.service.implementations;
 import java.util.List;
 import java.util.Optional;
 
+import com.axel.pruebatecnica.api.dto.event.concert.ConcertCreateDTO;
+import com.axel.pruebatecnica.api.mapper.ConcertMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,18 +20,13 @@ import lombok.RequiredArgsConstructor;
 public class ConcertService implements IConcertService {
 
 	private final IConcertRepository concertRepository;
+    private final ConcertMapper concertMapper;
 
 	@Override
 	@Transactional
-	public EventConcertEntity createConcert(EventConcertEntity concertEntity) {
+	public EventConcertEntity createConcert(ConcertCreateDTO concertDTO) {
 		
-		if (concertEntity.getName().isEmpty()) {
-			throw new RuntimeException("el evento no puede tener en nombre vacio");
-		}
-		
-		if (concertEntity.getDateTime()==null ) {
-			throw new RuntimeException("el evento no puede tener la fecha vacia");
-		}
+		EventConcertEntity concertEntity = concertMapper.toEntity(concertDTO);
 		
 		return concertRepository.save(concertEntity);
 	}

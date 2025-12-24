@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import com.axel.pruebatecnica.api.dto.user.UserCreateDTO;
+import com.axel.pruebatecnica.api.dto.user.UserResponseDTO;
+import com.axel.pruebatecnica.api.mapper.UserMapper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +26,7 @@ public class UserService implements IUserService {
 	private final IUserRepository userRepository;
 	private final IRoleRepository roleRepository;
 	private final PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -33,8 +36,9 @@ public class UserService implements IUserService {
 
 	@Override
 	@Transactional
-	public UserEntity save(UserEntity user) {
+	public UserEntity save(UserCreateDTO userDTO) {
 
+		UserEntity user = userMapper.toEntity(userDTO);
 		// rol agergado por defecto
 		Optional<RoleEntity> optionalRoleUser = roleRepository.findByName("ROLE_USER");
 		// se agrega elrol por defecto a al la lista de roles que se setteara a el
@@ -58,8 +62,8 @@ public class UserService implements IUserService {
 		return userRepository.save(user);
 	}
 
-	public UserEntity findByUsername(String username) throws Exception {
-		return userRepository.findByUsername(username).orElseThrow(() -> new NotFoundException());
+	public UserResponseDTO findByUsername(String username) throws Exception {
+		return userMapper.toDTO(userRepository.findByUsername(username).orElseThrow());
 	}
 
 }

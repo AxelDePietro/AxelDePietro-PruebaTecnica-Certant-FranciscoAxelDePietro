@@ -1,8 +1,12 @@
 package com.axel.pruebatecnica.api.service.implementations;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
+import com.axel.pruebatecnica.api.dto.event.theater.TheaterCreateDTO;
+import com.axel.pruebatecnica.api.dto.event.theater.TheaterResponseDTO;
+import com.axel.pruebatecnica.api.exceptions.NoEncontrado;
+import com.axel.pruebatecnica.api.mapper.TheaterMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,29 +22,32 @@ import lombok.RequiredArgsConstructor;
 public class TheaterService implements ITheaterService {
 
 	private final ITheaterRepository theaterRepository;
+    private final TheaterMapper theaterMapper;
 
 	@Override
 	@Transactional
-	public EventTheaterEntity createTheater(EventTheaterEntity theaterEntity) {
+	public EventTheaterEntity createTheater(TheaterCreateDTO theaterDTO) {
 
-		if (theaterEntity.getName().isEmpty()) {
-			throw new RuntimeException("el evento no puede tener en nombre vacio");
-		}
-
-		if (theaterEntity.getDateTime() == null) {
-			throw new RuntimeException("el evento no puede tener la fecha vacia");
-		}
+        EventTheaterEntity theaterEntity = theaterMapper.toEntity(theaterDTO);
 
 		return theaterRepository.save(theaterEntity);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<EventTheaterEntity> allTheaters() {
+	public List<TheaterResponseDTO> allTheaters() {
 
-		List<EventTheaterEntity> theaters = theaterRepository.findAll();
+		List<TheaterResponseDTO> theaters = new ArrayList<>();
 
-		if (theaters.isEmpty() || theaters == null) {
+        for(EventTheaterEntity theater : theaterRepository.findAll()) {
+            theaters.add(theaterMapper.toDTO(theater));
+        }
+
+        //theaters = theaterRepository.findAll().stream().map(t -> theaterMapper.toDTO(t)).toList();
+
+        //theaters = theaterRepository.findAll().stream().map(theaterMapper::toDTO).toList();
+
+        if (theaters.isEmpty()) {
 			throw new ListaVacia();
 		}
 
@@ -50,13 +57,13 @@ public class TheaterService implements ITheaterService {
 	@Override
 	@Transactional
 	public void delete(int idTheater) {
-		Optional<EventTheaterEntity> optional = theaterRepository.findById(idTheater);
 
-		if (optional.isEmpty()) {
-			throw new RuntimeException("la obra de teatro que desea eliminar no se encontro");
-		}
+        try {
+            theaterRepository.deleteById(idTheater);
+        } catch (Exception e) {
+            throw new NoEncontrado(idTheater);
+        }
 
-		theaterRepository.deleteById(idTheater);
 	}
 
 }
