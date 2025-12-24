@@ -1,10 +1,12 @@
 package com.axel.pruebatecnica.api.dto.event.concert;
 
-import com.axel.pruebatecnica.api.dto.event.EventResponseDTO;
+import java.time.LocalDateTime;
 
-public class ConcertResponseDTO extends EventResponseDTO {
+public class ConcertResponseDTO {
 
-    private int campoCant;
+    private int idEvent;
+    private String name;
+    private LocalDateTime dateTime;    private int campoCant;
     private int palcoCant;
     private int plateaCant;
 

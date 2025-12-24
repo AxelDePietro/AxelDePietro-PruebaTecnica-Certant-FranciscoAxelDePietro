@@ -1,10 +1,11 @@
 package com.axel.pruebatecnica.api.dto.event.theater;
 
-import com.axel.pruebatecnica.api.dto.event.EventCreateDTO;
-import com.axel.pruebatecnica.api.dto.event.EventResponseDTO;
+import java.time.LocalDateTime;
 
-public class TheaterCreateDTO extends EventCreateDTO{
+public class TheaterCreateDTO {
 
+    private String name;
+    private LocalDateTime dateTime;
     private int generalCant;
     private int vipCant;
 

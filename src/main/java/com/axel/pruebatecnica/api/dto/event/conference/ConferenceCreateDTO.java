@@ -1,10 +1,11 @@
 package com.axel.pruebatecnica.api.dto.event.conference;
 
-import com.axel.pruebatecnica.api.dto.event.EventCreateDTO;
-import com.axel.pruebatecnica.api.dto.event.EventResponseDTO;
+import java.time.LocalDateTime;
 
-public class ConferenceCreateDTO extends EventCreateDTO {
+public class ConferenceCreateDTO {
 
+    private String name;
+    private LocalDateTime dateTime;
     private int charlaConMeetCant;
     private int charlaSinMeetCant;
 
