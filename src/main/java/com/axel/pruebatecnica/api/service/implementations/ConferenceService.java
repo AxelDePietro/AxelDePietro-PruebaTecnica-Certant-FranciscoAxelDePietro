@@ -1,9 +1,12 @@
 package com.axel.pruebatecnica.api.service.implementations;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import com.axel.pruebatecnica.api.dto.event.conference.ConferenceCreateDTO;
+import com.axel.pruebatecnica.api.dto.event.conference.ConferenceResponseDTO;
+import com.axel.pruebatecnica.api.exceptions.NoEncontrado;
 import com.axel.pruebatecnica.api.mapper.ConferenceMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,11 +36,13 @@ public class ConferenceService implements IConferenceService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<EventConferenceEntity> allConferences() {
+	public List<ConferenceResponseDTO> allConferences() {
 
-		List<EventConferenceEntity> conferences = conferenceRepository.findAll();
+		List<ConferenceResponseDTO> conferences = new ArrayList<>();
 
-		if (conferences.isEmpty() || conferences == null) {
+        conferences = conferenceRepository.findAll().stream().map(conferenceMapper::toDTO).toList();
+
+		if (conferences.isEmpty()) {
 			throw new ListaVacia();
 		}
 
@@ -48,11 +53,12 @@ public class ConferenceService implements IConferenceService {
 	@Override
 	@Transactional
 	public void delete(int idConference) {
-		Optional<EventConferenceEntity> optional = conferenceRepository.findById(idConference);
 
-		if (optional.isEmpty()) {
-			throw new RuntimeException("la conferencia que desea eliminar no se encontro");
-		}
+        try {
+            conferenceRepository.findById(idConference);
+        } catch (Exception e) {
+            throw new NoEncontrado(idConference);
+        }
 
 		conferenceRepository.deleteById(idConference);
 	}

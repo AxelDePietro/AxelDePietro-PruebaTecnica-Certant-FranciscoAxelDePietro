@@ -3,6 +3,7 @@ package com.axel.pruebatecnica.api.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
@@ -57,6 +58,7 @@ public class UserEntity {
 	private boolean freePass;
 
 	// list
+    //@JsonIgnore
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
 	private List<BookingEntity> bookings = new ArrayList<>();
 

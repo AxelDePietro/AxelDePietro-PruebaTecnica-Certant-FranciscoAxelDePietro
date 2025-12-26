@@ -6,7 +6,9 @@ import com.axel.pruebatecnica.api.entity.envents.EventEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.Data;
 
+@Data
 public class BookingCreateDTO {
 
     private String seatType;

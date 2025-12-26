@@ -7,6 +7,7 @@ import java.util.Optional;
 import com.axel.pruebatecnica.api.dto.user.UserCreateDTO;
 import com.axel.pruebatecnica.api.dto.user.UserResponseDTO;
 import com.axel.pruebatecnica.api.mapper.UserMapper;
+import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,11 +28,18 @@ public class UserService implements IUserService {
 	private final IRoleRepository roleRepository;
 	private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
+    private final ListableBeanFactory listableBeanFactory;
 
-	@Override
+    @Override
 	@Transactional(readOnly = true)
-	public List<UserEntity> findAll() {
-		return userRepository.findAll();
+	public List<UserResponseDTO> findAll() {
+
+        List<UserResponseDTO> list = new ArrayList<>();
+
+        list = userRepository.findAll().stream().map(userMapper::toDTO).toList();
+
+        return list;
+
 	}
 
 	@Override

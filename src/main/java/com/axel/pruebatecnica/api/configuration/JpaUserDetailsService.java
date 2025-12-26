@@ -4,49 +4,46 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.axel.pruebatecnica.api.entity.UserEntity;
+import com.axel.pruebatecnica.api.repository.IUserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.axel.pruebatecnica.api.entity.UserEntity;
-import com.axel.pruebatecnica.api.repository.IUserRepository;
-
-import lombok.RequiredArgsConstructor;
-
 @Service
-@RequiredArgsConstructor
 public class JpaUserDetailsService implements UserDetailsService {
 
-	private final IUserRepository userRepository;
+    @Autowired
+    private IUserRepository repository;
 
-	@Transactional
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Optional<UserEntity> userOptional = userRepository.findByUsername(username);
+    @Transactional(readOnly = true)
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		if (userOptional.isEmpty()) {
-			throw new UsernameNotFoundException(String.format("username %s no existe en el sistema", username));
-		}
+        Optional<UserEntity> userOptional = repository.findByUsername(username);
 
-		UserEntity user = userOptional.orElseThrow();
+        if (userOptional.isEmpty()) {
+            throw new UsernameNotFoundException(String.format("Username %s no existe en el sistema!", username));
+        }
 
-		// convierte a SimpleGrantedAuthority los roles del usuario antes rtomado y los
-		// inserta en los parametros del usuario UserDetails que retorna el metdo
-		List<GrantedAuthority> authorities = user.getRoles().stream()
-				.map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+        UserEntity user = userOptional.orElseThrow();
 
-		return new User(user.getUsername(), user.getPassword(), user.isEnabled(), true, true, true, authorities);
-	}
+        List<GrantedAuthority> authorities = user.getRoles().stream()
+                .map(role -> new SimpleGrantedAuthority(role.getName()))
+                .collect(Collectors.toList());
 
-	/*
-	 * udemy: esta clase es tomada por sSecurity en el login para autenticar los
-	 * usuarios si son encontrados los authentica, si no lanza la exception que
-	 * especifique
-	 * 
-	 */
+        return new org.springframework.security.core.userdetails.User(user.getUsername(),
+                user.getPassword(),
+                user.isEnabled(),
+                true,
+                true,
+                true,
+                authorities);
+    }
+
 }

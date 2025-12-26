@@ -3,6 +3,10 @@ package com.axel.pruebatecnica.api.service.implementations;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.axel.pruebatecnica.api.dto.booking.BookingCreateDTO;
+import com.axel.pruebatecnica.api.dto.booking.BookingResponseDTO;
+import com.axel.pruebatecnica.api.exceptions.NoEncontrado;
+import com.axel.pruebatecnica.api.mapper.BookingMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,12 +33,14 @@ public class BookingService implements IBookingService {
 	private final IBookingRepository bookingRepository;
 	private final IEventRepository eventRepository;
 	private final IUserRepository userRepository;
+    private final BookingMapper bookingMapper;
 
-	@Override
+    @Override
 	@Transactional
-	public BookingEntity createBooking(BookingEntity booking, int idEvent, int idUser)
+	public BookingEntity createBooking(BookingCreateDTO booking, int idEvent, int idUser)
 			throws Exception {
 
+        /// seteo de variables utiles para el proceso
 		EventEntity event = eventRepository.findById(idEvent)
 				.orElseThrow(() -> new RuntimeException("el evento no se encontro"));
 
@@ -42,8 +48,9 @@ public class BookingService implements IBookingService {
 				.orElseThrow(() -> new RuntimeException("el usuario no se encontro"));
 		;
 		
-		String seatType = booking.getSeatType().name();
+		String seatType = booking.getSeatType();
 
+        BookingEntity bookingEntity = bookingMapper.toEntity(booking);
 		
 		/// user atributes (entrada gratis)
 		boolean hasFreePass = (user.getBookings().size() + 1) % 5 == 0;
@@ -55,21 +62,21 @@ public class BookingService implements IBookingService {
 		/// booking atributes
 		/// si alguna de esta no se encuentra falla antes{
 		// set evento
-		booking.setEvent(event);
+        bookingEntity.setEvent(event);
 
 		// set usuario
-		booking.setUser(user);
+        bookingEntity.setUser(user);
 		/// }
 
 		// precio si usuario tiene entrada gratis o no (precio normal)
 		if (hasFreePass) {
-			booking.setPrice(0);
+            bookingEntity.setPrice(0);
 		} else {
-			booking.setPrice(SeatTypeEnum.valueOf(seatType).getValor());
+            bookingEntity.setPrice(SeatTypeEnum.valueOf(seatType).getValor());
 		}
 
 		// set enum tipo de asiento, metodo privado
-		booking.setSeatType(SeatTypeEnum.valueOf(seatType));
+        bookingEntity.setSeatType(SeatTypeEnum.valueOf(seatType));
 
 		/// event atributes
 
@@ -80,14 +87,16 @@ public class BookingService implements IBookingService {
 
 		userRepository.save(user);
 
-		return bookingRepository.save(booking);
+		return bookingRepository.save(bookingEntity);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<BookingEntity> allBookings() {
+	public List<BookingResponseDTO> allBookings() {
 
-		List<BookingEntity> bookings = bookingRepository.findAll();
+		List<BookingResponseDTO> bookings = new ArrayList<>();
+
+        bookings = bookingRepository.findAll().stream().map(bookingMapper::toDTO).toList();
 
 		if (bookings.isEmpty()) {
 			throw new SinReservas();
@@ -100,26 +109,34 @@ public class BookingService implements IBookingService {
 	@Override
 	@Transactional
 	public void delete(int idBooking) {
-		bookingRepository.deleteById(idBooking);
+
+        try {
+            bookingRepository.findById(idBooking);
+        }catch (Exception e){
+            throw new NoEncontrado(idBooking);
+        }
+
+        bookingRepository.deleteById(idBooking);
+
 	}
 
 	// reservas por usuario
 	@Transactional(readOnly = true)
-	public List<BookingEntity> myBookings(int idUser) {
+	public List<BookingResponseDTO> myBookings(int idUser) {
 
-		List<BookingEntity> myBookings = new ArrayList<>();
+		List<BookingEntity> myBookings = bookingRepository.findAll();
 
-		for (BookingEntity b : bookingRepository.findAll()) {
-			if (b.getUser().getIdUser() == idUser) {
-				myBookings.add(b);
-			}
-		}
+        java.util.List<BookingResponseDTO> myBookingsDTO =
+                myBookings.stream()
+                        .filter(reserva -> reserva.getUser().getIdUser() == idUser)
+                        .map(bookingMapper::toDTO)
+                        .toList();
 
-		if (myBookings.isEmpty() || myBookings == null) {
+		if (myBookingsDTO.isEmpty()) {
 			throw new SinReservas();
 		}
 
-		return myBookings;
+		return myBookingsDTO;
 	}
 
 //	metodos para uso local del crear

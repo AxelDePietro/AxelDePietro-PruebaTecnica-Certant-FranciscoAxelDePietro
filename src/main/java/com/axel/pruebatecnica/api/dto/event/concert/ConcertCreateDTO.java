@@ -1,9 +1,11 @@
 package com.axel.pruebatecnica.api.dto.event.concert;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
+@Data
 public class ConcertCreateDTO {
 
     @NotBlank(message = "el evento no puede tener el nombre vacio")
