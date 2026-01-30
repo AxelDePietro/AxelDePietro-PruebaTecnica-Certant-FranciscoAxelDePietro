@@ -1,7 +1,11 @@
 package com.axel.pruebatecnica.api.controller;
 
 import com.axel.pruebatecnica.api.dto.auth.LoginCreateDTO;
+import com.axel.pruebatecnica.api.dto.auth.LoginResponseDTO;
+import com.axel.pruebatecnica.api.dto.user.UserCreateDTO;
+import com.axel.pruebatecnica.api.entity.UserEntity;
 import com.axel.pruebatecnica.api.service.implementations.AuthService;
+import com.axel.pruebatecnica.api.service.implementations.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,15 +19,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AuthController {
 
     private final AuthService authService;
+    private final UserService userService;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginCreateDTO loginCreateDTO) {
-        return ResponseEntity.status(201).body(authService.login(loginCreateDTO).getToken());
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginCreateDTO loginCreateDTO) {
+        return ResponseEntity.ok(authService.login(loginCreateDTO));
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Void> register() {
-        // TODO: Implementar registro
+    public ResponseEntity<Void> register(@RequestBody UserCreateDTO createDTO) {
+        userService.save(createDTO);
         return ResponseEntity.status(201).body(null);
     }
 }
